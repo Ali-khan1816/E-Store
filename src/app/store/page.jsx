@@ -1,25 +1,34 @@
+"use client";
 
-import ProductBox from '@/components/ProductBox'
-import { getProducts } from '@/libraries'
-import React from 'react'
+import ProductBox from "@/components/ProductBox";
+import { getProducts } from "@/libraries";
+import React, { useEffect, useState } from "react";
 
-const StorePage = () => {
+const ProductListing = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts();
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
   return (
-      <ProductListing/>
-  )
-}
+    <div className="grid gap-6 
+                    grid-cols-1 
+                    sm:grid-cols-2 
+                    md:grid-cols-3 
+                    lg:grid-cols-3 
+                    xl:grid-cols-4">
+      {products.length > 0 ? (
+        products.map((prod) => <ProductBox key={prod.id} product={prod} />)
+      ) : (
+        <p className="text-center w-full">Loading products...</p>
+      )}
+    </div>
+  );
+};
 
-export default StorePage
-
-const ProductListing =async () =>{
-  const products = await getProducts();
-return <div className='col-span-4 grid grid-cols-3 gap-5  '>
-  {
-    products.map((prod)=>(
-      <ProductBox key={prod.id} product={prod} />
-    ))
-  }
-
-</div>
-    
-}
+export default ProductListing;

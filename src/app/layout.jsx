@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Header */}
         <Header />
-        <main className="pt-30">
+        <main className="pt-24">
           {children}
         </main>
         

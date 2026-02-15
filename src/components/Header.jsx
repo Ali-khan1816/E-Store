@@ -1,69 +1,108 @@
-import React from 'react'
-import Container from './home/Container';
-import Link from 'next/link';
-import { FiSearch, FiShoppingCart } from 'react-icons/fi';
+"use client";
 
-const Navbar = () => {
-  return (
-    <nav className='flex items-center gap-7'>
-
-      
-      <ul className='flex gap-5'>
-        <li className='text-xl hover:text-pink-500 transition-colors duration-300 cursor-pointer'>
-          <Link href="/">Home</Link>
-        </li>
-        <li className='text-xl hover:text-pink-500 transition-colors duration-300 cursor-pointer'>
-          <Link href="/store">Store</Link>
-        </li>
-      </ul>
-
-      {/* Cart Icon with Badge */}
-      <div className="relative w-fit cursor-pointer">
-        <FiShoppingCart
-          className='text-gray-700 hover:text-pink-500 transition-colors duration-300'
-          size={28}
-        />
-        <span className='absolute -top-2 -right-2 bg-pink-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-semibold'>
-          3
-        </span>
-      </div>
-
-    </nav>
-  )
-}
+import React, { useState } from "react";
+import Container from "./home/Container";
+import Link from "next/link";
+import { FiSearch, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 
 const Header = () => {
-  return (
-    <header className='bg-white/40 backdrop-blur-md p-3 shadow-md fixed top-0 left-0 w-full z-50 transition-all duration-300'>
-      <Container className='flex justify-between items-center'>
+  const [menuOpen, setMenuOpen] = useState(false);
 
-        {/* Logo */}
-        <Link href="/">
-          <div className='flex items-center cursor-pointer'>
-            <span className='text-5xl font-bold text-pink-500'>
-              E Store<b className='text-black'>.</b>
-            </span>
-          </div>
+  return (
+    <header className="bg-white/40 backdrop-blur-md shadow-md fixed top-0 left-0 w-full z-50">
+
+      <Container className="flex items-center justify-between py-3 px-2 sm:px-6 lg:px-8 gap-4">
+
+        {/* LOGO */}
+        <Link href="/" className="flex-shrink-0">
+          <span className="text-2xl sm:text-3xl font-bold text-pink-500 cursor-pointer">
+            E Store<b className="text-black">.</b>
+          </span>
         </Link>
 
-        {/* Search Bar */}
-        <div className='flex items-center'>
+        {/* SEARCH BAR (Desktop Only) */}
+        <div className="hidden md:flex flex-1 max-w-md">
           <input
-          name='search'
             type="text"
-            placeholder='Search for product'
-            className='border border-r-0 rounded-l-full px-4 py-2 w-70 focus:outline-none'
+            placeholder="Search products..."
+            className="w-full border border-r-0 px-4 py-2 rounded-l-full focus:outline-none"
           />
-          <button className='bg-pink-500 rounded-r-full p-2 text-white hover:bg-pink-700 transition-colors duration-300'>
-            <FiSearch size={26} />
+          <button className="bg-pink-500 px-4 rounded-r-full text-white hover:bg-pink-600 transition">
+            <FiSearch size={20} />
           </button>
         </div>
 
-        <Navbar />
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6">
+          <Link href="/" className="hover:text-pink-500 transition">
+            Home
+          </Link>
+
+          <Link href="/store" className="hover:text-pink-500 transition">
+            Store
+          </Link>
+
+          {/* Cart */}
+          <div className="relative cursor-pointer">
+            <FiShoppingCart size={24} />
+            <span className="absolute -top-2 -right-2 bg-pink-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-semibold">
+              3
+            </span>
+          </div>
+        </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden text-2xl p-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </button>
 
       </Container>
+
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div className="md:hidden bg-white shadow-lg px-6 py-6 space-y-6">
+
+          {/* Mobile Search */}
+          <div className="flex w-full">
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full border border-r-0 px-4 py-2 rounded-l-full focus:outline-none"
+            />
+            <button className="bg-pink-500 px-4 rounded-r-full text-white">
+              <FiSearch size={20} />
+            </button>
+          </div>
+
+          <Link
+            href="/"
+            onClick={() => setMenuOpen(false)}
+            className="block hover:text-pink-500"
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/store"
+            onClick={() => setMenuOpen(false)}
+            className="block hover:text-pink-500"
+          >
+            Store
+          </Link>
+
+          {/* Cart Mobile */}
+          <div className="flex items-center gap-2 cursor-pointer">
+            <FiShoppingCart size={20} />
+            <span>Cart (3)</span>
+          </div>
+
+        </div>
+      )}
     </header>
-  )
-}
+  );
+};
 
 export default Header;
