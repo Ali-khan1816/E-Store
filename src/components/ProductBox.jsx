@@ -1,4 +1,4 @@
-// src/components/ProductBox.jsx
+
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -27,10 +27,10 @@ const ProductBox = ({ product }) => {
           {product.description}
         </p>
         <div className="mt-2 flex items-center justify-between">
-          <span className="text-lg sm:text-xl md:text-2xl font-bold text-green-600">
+          <span className="text-xl sm:text-xl md:text-xl font-bold text-green-600">
             ${product.price}
           </span>
-          <button className="bg-pink-500 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-md hover:bg-pink-800 transition-colors text-xs sm:text-sm md:text-sm">
+          <button className="bg-pink-500 text-whiten   sm:px-2  sm:py-2 rounded hover:bg-pink-800 transition-colors text-xs sm:text-sm md:text-sm">
             Add to Cart
           </button>
         </div>
